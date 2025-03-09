@@ -15,7 +15,7 @@ f[xquart:3*xquart] = 1
 A0 = 2/L * np.sum(f * np.ones_like(x)) * dx
 k_vals = np.arange(1, k_range + 1)
 
-eix = np.cos(np.outer(k_vals, x)) + np.sin(np.outer(k_vals,x))*(1j)
+eix = np.exp(1j*np.outer(k_vals,x))
 A_k = 2/L * np.dot(np.real(eix), f) * dx
 B_k = 2/L * np.dot(np.imag(eix), f) * dx
 

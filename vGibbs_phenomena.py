@@ -5,12 +5,14 @@ dx = 0.001 # Resolution
 L = 2*np.pi
 x = np.arange(0, L+dx, dx)
 xquart = int(np.floor(len(x)/4))
-k_range = 225
+k_range = 225 # Total number of frequences/terms
 
 # Defining Hat Function
 
 f = np.zeros_like(x)
 f[xquart:3*xquart] = 1
+
+# Defining Fourier Coefficients
 
 A0 = 2/L * np.sum(f * np.ones_like(x)) * dx
 k_vals = np.arange(1, k_range + 1)
@@ -19,13 +21,18 @@ eix = np.exp(1j*np.outer(k_vals,x))
 A_k = 2/L * np.dot(np.real(eix), f) * dx
 B_k = 2/L * np.dot(np.imag(eix), f) * dx
 
+# Creating Numpy array with all Fourier Series for each number of terms up to the number given by k_range
+
 F_S = A0/2  + np.cumsum(A_k[:, np.newaxis] * np.real(eix), axis = 0) + np.cumsum(B_k[:, np.newaxis] * np.imag(eix), axis=0)
+
+# Amplitude arrays
 
 maxlist = np.ones(k_range)
 minlist = np.ones(k_range)
 abs_sumlist = np.ones(k_range)
 lisbasis = np.linspace(0, k_range, k_range)
 
+# Entering values for amplitude arrays and plotting for increasing number of terms, up to number given by k_range
 
 for i in range(0, k_range):
     maxlist[i] = max(F_S[i])
